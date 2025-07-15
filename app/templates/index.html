@@ -1,30 +1,56 @@
 {% extends "base.html" %}
 
 {% block title %}Página Principal{% endblock %}
+{% block head_extra %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style_index.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Sigmar+One&display=swap" rel="stylesheet">
+    {% endblock %}
 
 {% block header %} 
-    <div class="container">
-        <h1>Bienvenido a la App de Pedidos</h1>
-        <p>Realiza tus pedidos de comida de manera fácil y rápida.</p>
+<div class="container mt-5 texto-header">
+    <div class="d-flex align-items-center justify-content-center">
+        <img src="{{ url_for('static', filename='img/logo_pedido.png') }}" alt="Logo" style="height: 70px;" class="">
+        <h1 class="m-0">Bienvenido a la App de Pedidos</h1>
     </div>
+    <h3 class="text-center mt-3">Realiza tus pedidos de comida de manera fácil y rápida.</h3>
+</div>
 {% endblock %}
+
 {% block content %}
-    
-    <div class="container d-flex justify-content-around mt-5">
-        <div class="row"> 
-            <div class="col-6 col-sm-3 card" style="width: 18rem;">
-            <img src="" alt="">
-            <h3>Menú</h3>
+    <hr class="color">
+   <div class="container mt-5 p-4">
+    <div class="row justify-content-around"> 
+        <div class="col-6 col-sm-3 mb-4 d-flex">
+            <div class="card h-100 w-100 card-hover">
+                <img src="{{url_for('static', filename='img/menu_pedido.jpeg')}}" alt="" class="card-img-top">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Menú</h5>
+                    <p class="card-text">Escoge de nuestro diverso menú de opciones.</p>
+                </div> 
             </div>
-            <div class="col-6 col-sm-3 card" style="width: 18rem;">
-                <h3>Ordenes</h3>
-            </div>
-            <div class="col-6 col-sm-3 card" style="width: 18rem;">
-            <h3> Delivery </h3>
-            </div>
-            
         </div>
-        
-        
+
+        <div class="col-6 col-sm-3 mb-4 d-flex">
+            <div class="card h-100 w-100 card-hover">
+                <img src="{{url_for('static', filename='img/orden_pedido.jpg')}}" alt="" class="card-img-top">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Ordenes</h5>
+                    <p class="card-text">Tus pedidos de comida estarán aquí.</p>
+                </div> 
+            </div>
+        </div>
+
+        <div class="col-6 col-sm-3 mb-4 d-flex">
+            <div class="card h-100 w-100 card-hover">
+                <img src="{{url_for('static', filename='img/delivery_pedido.jpg')}}" alt="" class="card-img-top">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Delivery</h5>
+                    <p class="card-text">Tu comida será entregada en la puerta de tu casa.</p>
+                </div> 
+            </div>
+        </div>
     </div>
+</div>
 {% endblock %}
