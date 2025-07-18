@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Menú de Platos</h2>
+    <div class="row">
+        {% for plato in platos %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ plato.nombre }}</h5>
+                    <p class="card-text">{{ plato.descripcion }}</p>
+                    <p class="card-text font-weight-bold">${{ plato.precio }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
