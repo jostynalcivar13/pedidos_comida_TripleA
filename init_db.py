@@ -17,7 +17,7 @@ db.platos.insert_many(platos)
 
 # tabla pedidos. ajustar los parametros de acuerdo a lo que queremos
 pedidos = [
-    {"id": 1, "plato_id": 1, "cantidad": 2, "estado": "creado", "tiempo": "10:00"},
+    {"id": 1, "platos": [{"nombre":"arroz con pollo","precio":10, "cantidad": 1},{"nombre":"hamburguesa","precio":5, "cantidad": 2} ], "estado": "creado"},
     {"id": 2, "plato_id": 2, "cantidad": 1, "estado": "en camino", "tiempo": "10:05"},
     {"id": 3, "plato_id": 3, "cantidad": 3, "estado": "entregado", "tiempo": "20:15"},
     {"id": 4, "plato_id": 4, "cantidad": 1, "estado": "cancelado", "tiempo": "10:20"},

@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, render_template
-
+import requests
 from app.models.connection import coleccion
 
 def get_platos():
@@ -15,6 +15,14 @@ def post_order():
     if not data:
         return jsonify({"error": "No se enviaron datos"}), 400
 
+    response = requests.post("https://faas-eta.onrender.com/eta", json=data)
+    if response.status_code != 200:
+        return jsonify({"error": "No se pudo calcular ETA"}), 500
+
+    eta = response.json().get("eta")
+    data['eta'] = eta
+    
     result = coleccion["orders"].insert_one(data)
 
-    return jsonify({"message": "Pedido creado", "id": str(result.inserted_id)}), 201
+
+    return jsonify({"message": "Pedido creado"}), 201
