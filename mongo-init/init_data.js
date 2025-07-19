@@ -1,10 +1,7 @@
-from pymongo import MongoClient
+db = db.getSiblingDB('pedidos'); 
 
-client = MongoClient('mongodb://localhost:27017/')
-db = client['pedidos']  
-
-platos = [
-     {
+db.menu.insertMany([
+  {
     "nombre": "Hamburguesa Doble",
     "descripcion": "Deliciosa hamburguesa con doble carne, queso cheddar y vegetales frescos.",
     "precio": 6.99,
@@ -39,7 +36,6 @@ platos = [
     "imagen": "refresco.jpg",
     "disponible": "true"
   }
-]
-db.menu.insert_many(platos)
+]);
 
-print("Datos iniciales insertados a la base.")
+print("✅ Datos iniciales insertados en 'pedidos.menu'");
