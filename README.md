@@ -6,4 +6,6 @@ Grupo de trabajo:
 
 README Grupo 2 · Pedidos de Comida Rápida
 
-API's
+Tabla de ENDPOINTS
+
+Descripción breve de FaaS
