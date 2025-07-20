@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+  mongo:
+    image: mongo
+    container_name: mongo_pedidos
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+      - ./pedidoComida/mongo-init:/docker-entrypoint-initdb.d
+    restart: always
+  
+  web:
+    build: ./pedidoComida
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./pedidoComida:/app
+    depends_on:
+      - mongo
+    environment:
+      - FLASK_ENV=development
+      - MONGO_URI=mongodb://mongo:27017/pedidos
+  
+  faas:
+    build:
+      context: ./faas
+      dockerfile: Dockerfile
+    container_name: faas_app
+    ports:
+      - "8000:8000"
+    restart: always
+
+volumes:
+  mongo_data:
