@@ -10,6 +10,6 @@ def create_app():
     from app.routes.menu import menu_index 
     app.register_blueprint(index)
     app.register_blueprint(order_index)
-    app.register_blueprint(menu_index)
+    app.register_blueprint(menu_index, url_prefix='/api')
 
     return app

@@ -1,5 +1,4 @@
-version: '3.8'
-
+version: '3.3'
 services:
   mongo:
     image: mongo
@@ -8,20 +7,31 @@ services:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
-      - ./mongo-init:/docker-entrypoint-initdb.d 
+      - ./pedidoComida/mongo-init:/docker-entrypoint-initdb.d
     restart: always
+  
   web:
-    build: .
+    build: ./pedidoComida
+    security_opt:
+      - apparmor=unconfined
     ports:
       - "5000:5000"
     volumes:
-      - .:/app
+      - ./pedidoComida:/app
     depends_on:
       - mongo
     environment:
       - FLASK_ENV=development
       - MONGO_URI=mongodb://mongo:27017/pedidos
   
+  faas:
+    build:
+      context: ./faas
+      dockerfile: Dockerfile
+    container_name: faas_app
+    ports:
+      - "8000:8000"
+    restart: always
 
 volumes:
   mongo_data:

@@ -1,2 +1,6 @@
-env
+.env
 __pycache__
+terraform_prox/terraform.tfstate
+terraform_prox/terraform.tfstate.backup
+terraform_prox/.terraform.lock.hcl
+terraform_prox/.terraform/

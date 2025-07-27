@@ -85,25 +85,42 @@ function finalizarOrden() {
   }
 
   fetch("{{ url_for('order_index.create_order') }}", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      items: pedidos,
-      total: pedidos.reduce((sum, p) => sum + (p.precio * p.cantidad), 0)
-    }),
-  })
-    .then(res => res.json())
-    .then(data => {
-      alert(data.message);
-      pedidos = [];
-      actualizarVista();
-    })
-    .catch(err => {
-      console.error("Error:", err);
-      alert("Error al enviar el pedido.");
-    });
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "X-API-KEY": "grupopatito"
+  },
+  body: JSON.stringify({
+    items: pedidos,
+    total: pedidos.reduce((sum, p) => sum + (p.precio * p.cantidad), 0)
+  }),
+})
+.then(res => res.json())
+.then(data => {
+  const etaDate = new Date(data.data);
+  
+  const opcionesFecha = {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+  };
+
+  const hora = etaDate.getHours().toString().padStart(2, "0");
+  const minutos = etaDate.getMinutes().toString().padStart(2, "0");
+  const fechaFormateada = etaDate.toLocaleDateString("es-EC", opcionesFecha);
+
+  const etaFormateada = `${hora}:${minutos} - ${fechaFormateada}`;
+
+  alert(`${data.message}. Hora estimada de entrega: ${etaFormateada}`);
+  pedidos = [];
+  actualizarVista();
+})
+
+.catch(err => {
+  console.error("Error:", err);
+  alert("Error al enviar el pedido.");
+});
+
 }
 
 </script>
