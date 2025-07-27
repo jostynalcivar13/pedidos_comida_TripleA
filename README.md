@@ -38,7 +38,7 @@ terraform init
 terraform plan
 
 # 4. Aplica el script (crea VM y despliega app)
-terraform apply
+terraform apply ```
 
 ##  Visualización de la app
 http://10.10.0.60:5000/api/platosGet
