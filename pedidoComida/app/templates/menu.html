@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-8">
+      <h2 class="text-center mb-4">Menú de Platos</h2>
+      <div class="row">
+        {% for plato in platos %}
+        <div class="col-md-6 mb-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body text-center">
+              <h5 class="card-title">{{ plato.nombre }}</h5>
+              <p class="card-text text-muted">{{ plato.descripcion }}</p>
+              <p class="card-text font-weight-bold h5">${{ plato.precio }}</p>
+              <button class="btn btn-danger" onclick="agregarPedido('{{ plato.nombre }}', {{ plato.precio }})">
+                Agregar
+              </button>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <h2 class="text-center mb-4">Orden</h2>
+      <ul id="lista-pedidos" class="list-group mb-3"></ul>
+
+      <div class="d-flex justify-content-between border-top pt-3">
+        <strong>Total:</strong>
+        <strong id="total">$0.00</strong>
+      </div>
+
+      <button class="btn btn-success w-100 mt-3" onclick="finalizarOrden()">Finalizar Orden</button>
+    </div>
+  </div>
+</div>
+
+    {% block scripts %}
+
+<script>
+  let pedidos = [];
+
+  function agregarPedido(nombre, precio) {
+    const existente = pedidos.find(p => p.nombre === nombre);
+    if (existente) {
+      existente.cantidad += 1;
+    } else {
+      pedidos.push({ nombre, precio, cantidad: 1 });
+    }
+
+    actualizarVista();
+  }
+
+  function actualizarVista() {
+    const lista = document.getElementById("lista-pedidos");
+    const totalEl = document.getElementById("total");
+    lista.innerHTML = "";
+
+    let total = 0;
+    pedidos.forEach((item, index) => {
+      const subtotal = item.precio * item.cantidad;
+      total += subtotal;
+
+      const li = document.createElement("li");
+      li.className = "list-group-item d-flex justify-content-between align-items-center";
+      li.innerHTML = `
+        <div>
+          <strong>${item.nombre}</strong><br>
+          <small>Cantidad: ${item.cantidad}</small>
+        </div>
+        <span>$${subtotal.toFixed(2)}</span>
+      `;
+      lista.appendChild(li);
+    });
+
+    totalEl.textContent = `$${total.toFixed(2)}`;
+  }
+
+function finalizarOrden() {
+  if (pedidos.length === 0) {
+    alert("Agrega al menos un plato para finalizar tu orden.");
+    return;
+  }
+
+  fetch("{{ url_for('order_index.create_order') }}", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "X-API-KEY": "grupopatito"
+  },
+  body: JSON.stringify({
+    items: pedidos,
+    total: pedidos.reduce((sum, p) => sum + (p.precio * p.cantidad), 0)
+  }),
+})
+.then(res => res.json())
+.then(data => {
+  const etaDate = new Date(data.data);
+  
+  const opcionesFecha = {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+  };
+
+  const hora = etaDate.getHours().toString().padStart(2, "0");
+  const minutos = etaDate.getMinutes().toString().padStart(2, "0");
+  const fechaFormateada = etaDate.toLocaleDateString("es-EC", opcionesFecha);
+
+  const etaFormateada = `${hora}:${minutos} - ${fechaFormateada}`;
+
+  alert(`${data.message}. Hora estimada de entrega: ${etaFormateada}`);
+  pedidos = [];
+  actualizarVista();
+})
+
+.catch(err => {
+  console.error("Error:", err);
+  alert("Error al enviar el pedido.");
+});
+
+}
+
+</script>
+
+{% endblock %}
+{% endblock %}

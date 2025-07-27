@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+env/
+venv/
+instance/
+*.sqlite3
+.git
+.gitignore
+./pedidoComida/env
+./pedidoComida/__pycache__/
+./faas/__pycache__/
+./faas/env/
