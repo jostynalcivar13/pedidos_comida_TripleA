@@ -25,9 +25,11 @@ git clone https://github.com/jostynalcivar13/pedidos_comida_TripleA.git
 
 cd pedidos_comida_TripleA
 
-# 2. Configura las variables en main.tf
-# - IP de Proxmox
-# - Token
+# 2. Configuración del main.tf
+- IP de Proxmox
+- Token
+- URL
+- Script de instalación y ejecución del docker.
 
 # 3. Inicializa Terraform
 terraform init
@@ -36,4 +38,7 @@ terraform init
 terraform plan
 
 # 4. Aplica el script (crea VM y despliega app)
-terraform apply 
+terraform apply
+
+##  Visualización de la app
+http://10.10.0.60:5000/api/platosGet
