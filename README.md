@@ -24,7 +24,6 @@ Este repositorio despliega una app en Docker sobre una VM de Proxmox usando Terr
 ---
 
 ## 🚀 Pasos de instalación
-
 ```bash
 # 1. Clona el repositorio
 git clone https://github.com/jostynalcivar13/pedidos_comida_TripleA.git
@@ -45,12 +44,14 @@ terraform plan
 
 # 5. Aplica el script (crea la VM y despliega la app)
 terraform apply
-
----
+````
 
 ## 🌐 Visualización de la app
 
 Una vez desplegada correctamente, puedes acceder a la API de la aplicación mediante la siguiente URL:
 
-```http
 http://10.10.0.60:5000/api/platosGet
+
+
+
+
