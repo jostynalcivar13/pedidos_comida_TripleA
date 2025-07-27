@@ -4,3 +4,8 @@ terraform_prox/terraform.tfstate
 terraform_prox/terraform.tfstate.backup
 terraform_prox/.terraform.lock.hcl
 terraform_prox/.terraform/
+terraform_prox\.terraform
+*.tfstate
+*.tfstate.backup
+*.tfvars.json
+crash.log
