@@ -32,7 +32,7 @@ jobs:
         k6 run tests/k6_menu.js --out json=resultados_k6/k6_resultado.json
 
     - name: Subir resultado de k6 como artefacto
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: reporte-carga-k6
         path: resultados_k6/k6_resultado.json
