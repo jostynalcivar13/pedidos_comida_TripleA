@@ -82,3 +82,37 @@ http://10.10.0.60:5000/api/platosGet
 - Todos los timestamps siguen el formato ISO 8601 con zona horaria
 
 
+# Plan de Pruebas de Carga
+
+## Objetivos 
+
+- Evaluar el rendimiento del sistema bajo una carga de usuarios concurrentes.
+- Verificar la estabilidad de los endpoints `/platos` y `/order` durante 2 minutos de uso continuo con 50 usuarios.
+- Validar que la latencia P95 sea menor a 500 ms.
+- Asegurar que la tasa de errores (HTTP ≥ 400) sea inferior al 1 %.
+
+---
+
+## Tipo de Prueba
+
+- **Prueba de carga**: mediante la herramienta [k6](https://k6.io/), con un escenario de 50 usuarios virtuales y una duración total de 2 minutos + 30s de rampa.
+
+---
+
+## Configuración de k6
+
+```js
+export const options = {
+  stages: [
+    { duration: '30s', target: 50 },
+    { duration: '2m', target: 50 },
+  ],
+};
+````
+## Matriz de Casos vs Resultados Esperados
+
+| Métrica                     | Resultado             | Objetivo        | Cumple ✅ |
+|----------------------------|-----------------------|-----------------|------------|
+| Latencia P95               | **7.73 ms**           | < 500 ms        | ✅         |
+| Tasa de error              | **0.00%**             | < 1%            | ✅         |
+| VUs activos durante prueba | **50 máximo**         | 50              | ✅         |
