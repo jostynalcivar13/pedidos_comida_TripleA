@@ -52,6 +52,7 @@ Una vez desplegada correctamente, puedes acceder a la API de la aplicación medi
 
 http://10.10.0.60:5000/api/platosGet
 
+---
 # API Documentation
 
 ## Tabla de Endpoints REST
@@ -81,8 +82,8 @@ http://10.10.0.60:5000/api/platosGet
 - La función FaaS `calculate_eta()` se ejecuta a través del gateway de OpenFaaS
 - Todos los timestamps siguen el formato ISO 8601 con zona horaria
 
-
-# Plan de Pruebas de Carga
+---
+# Plan de Pruebas de Carga 🗂️
 
 ## Objetivos 
 
@@ -93,7 +94,7 @@ http://10.10.0.60:5000/api/platosGet
 
 ---
 
-## Tipo de Prueba
+## Tipo de Prueba 
 
 - **Prueba de carga**: mediante la herramienta [k6](https://k6.io/), con un escenario de 50 usuarios virtuales y una duración total de 2 minutos + 30s de rampa.
 
