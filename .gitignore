@@ -9,3 +9,7 @@ terraform_prox\.terraform
 *.tfstate.backup
 *.tfvars.json
 crash.log
+faas/env
+faas/__pycache__
+pedidoComida/env
+pedidoComida/__pycache__
