@@ -10,3 +10,5 @@ Flask==3.1.1
 pymongo==4.0.1
 requests
 
+pygelf==0.4.2
+python-json-logger==2.0.7

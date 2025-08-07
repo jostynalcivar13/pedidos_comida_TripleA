@@ -1,0 +1,33 @@
+version: '3.3'
+services:
+  opensearch:
+    image: opensearchproject/opensearch:2.11.1  
+    container_name: opensearch
+    environment:
+      - discovery.type=single-node
+      - plugins.security.disabled=true
+      - bootstrap.memory_lock=true
+      - OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - "9200:9200"
+    restart: always
+
+  graylog:
+    image: graylog/graylog:5.2
+    container_name: graylog
+    environment:
+      - GRAYLOG_PASSWORD_SECRET=somepasswordpepper
+      - GRAYLOG_ROOT_PASSWORD_SHA2=6a533492de5fe0a3a6f285cc3128a8a918b753ec61524850f796df292fc9d142
+      - GRAYLOG_HTTP_EXTERNAL_URI=http://localhost:9000/
+      - GRAYLOG_ELASTICSEARCH_HOSTS=http://opensearch:9200
+    depends_on:
+      - opensearch
+    ports:
+      - "9000:9000"
+      - "5044:5044"
+      - "12201:12201/udp"  
+    restart: always

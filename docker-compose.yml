@@ -1,5 +1,22 @@
 version: '3.3'
 services:
+  order_service:
+    build: ./pedidoComida
+    container_name: order_service
+    volumes:
+      - ./logs:/app/logs
+  
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:8.13.0
+    user: root
+    container_name: filebeat
+    volumes:
+      - ./filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      - ./logs:/app/logs:ro
+    depends_on:
+      - order_service
+    restart: always
+
   mongo:
     image: mongo
     container_name: mongo_pedidos
