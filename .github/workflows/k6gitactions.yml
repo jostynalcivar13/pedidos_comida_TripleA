@@ -1,0 +1,38 @@
+name: Pruebas de carga con k6 Grupo 2 - Alias GrupoPatito
+
+on: [push, pull_request]
+
+jobs:
+  k6-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Clonar código
+      uses: actions/checkout@v4
+
+    - name: Instalar Docker y Docker Compose
+      run: |
+        sudo apt update
+        sudo apt install docker-compose -y
+
+    - name: Levantar microservicios
+      run: docker-compose up -d
+
+    - name: Esperar 20 segundos para que se estabilicen los servicios
+      run: sleep 20
+
+    - name: Descargar k6
+      run: |
+        curl -sSL https://github.com/grafana/k6/releases/download/v0.51.0/k6-v0.51.0-linux-amd64.tar.gz | tar xz
+        sudo cp k6-v0.51.0-linux-amd64/k6 /usr/local/bin/
+
+    - name: Ejecutar prueba de carga con k6
+      run: |
+        mkdir -p resultados_k6
+        k6 run tests/k6_menu.js --out json=resultados_k6/k6_resultado.json
+
+    - name: Subir resultado de k6 como artefacto
+      uses: actions/upload-artifact@v4
+      with:
+        name: reporte-carga-k6
+        path: resultados_k6/k6_resultado.json
